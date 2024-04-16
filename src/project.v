@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-`define default_netname none
+`define default_nettype none
 
 module tt_um_example (
     input  wire [7:0] ui_in,    // Dedicated inputs
