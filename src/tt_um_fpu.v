@@ -56,7 +56,7 @@ wire [31:0] out_fpu;
   read_data rd(
   .clk            (clk),
   .read_data_reset(rst_n), //active low reset
-  .data_in_rd     (outputRegister), //152 bit input
+  .data_in_rd     (outputRegister), //32 bit input
   .data_out_rd    (uo_out), //8 bit output
   .input_changed  (input_changed),
   .enable_output  (enable_output)
@@ -130,7 +130,7 @@ endmodule
 
 
 
-module read_data #( parameter REG_WIDTH = 128)(
+module read_data #( parameter REG_WIDTH = 32)(
   input wire clk,
   input wire read_data_reset,  //active low reset
   input wire [REG_WIDTH-1:0] data_in_rd,
