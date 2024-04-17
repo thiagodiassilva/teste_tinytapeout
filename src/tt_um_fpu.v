@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-`default_nettype none
+#`default_nettype none
 
 module tt_um_fpu (
     input  wire [7:0] ui_in,    // Dedicated inputs
@@ -47,7 +47,7 @@ wire [31:0] out_fpu;
     .clk             (clk),
     .write_data_reset(rst_n),//active low reset
     .data_in_wd       (ui_in), //8 bit input
-    .data_out_wd      (inputRegister), //144 bit output
+    .data_out_wd      (inputRegister), //128 bit output
     .data_ready      (data_ready),
     .data_read       (data_read)
 );
@@ -58,11 +58,11 @@ wire [31:0] out_fpu;
   .read_data_reset(rst_n), //active low reset
   .data_in_rd     (outputRegister), //152 bit input
   .data_out_rd    (uo_out), //8 bit output
-  .input_changed  (uio_out[2]),
-  .enable_output  (uio_out[3])
+  .input_changed  (input_changed),
+  .enable_output  (enable_output)
 );
 
-assign uio_out = {4'b0000,data_ready , data_read, input_changed,enable_output};
+assign uio_out = {4'b0000,data_ready,data_read, input_changed,enable_output};
 
   // Group inputs into input register
   always @(posedge clk) begin
