@@ -20,14 +20,14 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "BIT 0"
+  ui[1]: "BIT 1"
+  ui[2]: "BIT 2"
+  ui[3]: "BIT 3"
+  ui[4]: "BIT 4"
+  ui[5]: "BIT 5"
+  ui[6]: "BIT 6"
+  ui[7]: "BIT 7"
 
   # Outputs
   uo[0]: ""
