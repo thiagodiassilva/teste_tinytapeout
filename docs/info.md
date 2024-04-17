@@ -16,9 +16,8 @@ An FPU with a 6-input multiply-accumulate adder would likely have the capability
 Such an FPU would be particularly useful in applications like high-performance computing, digital signal processing, scientific simulations, and graphics processing, where the ability to perform multiple arithmetic operations in parallel can greatly enhance performance.
 
 ## How to test
-
-Explain how to use your project : To be Done
+To be Done
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any : To be Done
+To be Done
