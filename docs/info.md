@@ -17,8 +17,8 @@ Such an FPU would be particularly useful in applications like high-performance c
 
 ## How to test
 
-Explain how to use your project
+Explain how to use your project : To be Done
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+List external hardware used in your project (e.g. PMOD, LED display, etc), if any : To be Done
