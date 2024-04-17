@@ -5,7 +5,7 @@
 
 `default_nettype none
 
-module tt_2ip_mult(
+module tt_um_fpu(
 
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
