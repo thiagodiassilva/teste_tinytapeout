@@ -1,6 +1,6 @@
 # Tiny Tapeout project information
 project: 
-  title:        "Dgrid FPU"      # Dgrid FPU
+  title:        "Dgrid_FPU"      # Dgrid FPU
   author:       "Aravind-Prasad-Abhinav-Prakash"      # Aravind-Prasad-Abhinav-Prakash
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "6 Input FPU for MAC at 28MHZ"      # 6 Input FPU for MAC at 28MHZ
