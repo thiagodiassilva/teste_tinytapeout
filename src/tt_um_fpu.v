@@ -168,13 +168,13 @@ module read_data #( parameter REG_WIDTH = 32)(
       enable_output <= 0;
       prev_data_in <= 0;
       input_changed <= 0;
+      data_out_rd <=0;
     end else begin
           if (enable_output) begin
                 if (counter < (REG_WIDTH/8)) begin
                  // data_out_rd <= internal_data[8*counter +: 8];
                  data_out_rd <= internal_data[((REG_WIDTH-1) - 8*counter) -: 8];
-
-                  counter <= counter + 1;
+                 counter <= counter + 1;
                 end else begin
                   enable_output <= 0;
                 end
