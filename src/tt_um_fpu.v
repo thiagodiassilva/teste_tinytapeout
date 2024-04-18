@@ -20,14 +20,14 @@ module tt_um_fpu (
 assign uio_oe = 8'b11111111;
   
   wire [127:0]   inputRegister;
-  reg [31:0]   outputRegister;
+  reg [31:0]   outputRegister = 0;
   wire data_ready , data_read, input_changed,enable_output;
+  wire add_valid;
 
-
-reg [31:0] I1  ;
-reg [31:0] I2  ;
-reg [31:0] I3  ;
-reg [31:0] I4  ;
+reg [31:0] I1 = 0 ;
+reg [31:0] I2 = 0 ;
+reg [31:0] I3 = 0 ;
+reg [31:0] I4 = 0 ;
 
 
 
@@ -40,7 +40,8 @@ wire [31:0] out_fpu;
 .I4 (I4),
 .clk(clk), 
 .rst(~rst_n), 
-.out_final(out_fpu)
+.out_final(out_fpu),
+.add_valid(add_valid)
 );
     
   write_data wd(
@@ -66,11 +67,26 @@ assign uio_out = {4'b0000,data_ready,data_read, input_changed,enable_output};
 
   // Group inputs into input register
   always @(posedge clk) begin
-        I1<= inputRegister[31:0];
-        I2<= inputRegister[63:32];
-        I3<= inputRegister[95:64];
-        I4<= inputRegister[127:96];
-     
+      if (rst_n) begin
+        I1<= 0;
+        I2<= 0;
+        I3<= 0;
+        I4<= 0;
+      end else begin
+        if (data_read && data_ready)begin
+            I1<= inputRegister[31:0];
+            I2<= inputRegister[63:32];
+            I3<= inputRegister[95:64];
+            I4<= inputRegister[127:96];
+            end
+//        else begin
+//        I1<= 0;
+//        I2<= 0;
+//        I3<= 0;
+//        I4<= 0;
+//        end
+                   
+     end
   end
 
   // Group outputs into output register
@@ -78,14 +94,16 @@ assign uio_out = {4'b0000,data_ready,data_read, input_changed,enable_output};
     if (rst_n) begin
       outputRegister <= 0;
     end else begin
-        if (data_read && data_ready)begin
+        if (add_valid)begin
             outputRegister <= out_fpu;
             end
+//        else begin
+//            outputRegister <= 0;
+//        end       
     end
   end
 
 endmodule
-
 
 module write_data#(parameter REG_WIDTH = 128)(
     input wire clk,
@@ -97,7 +115,7 @@ module write_data#(parameter REG_WIDTH = 128)(
 );
     
     reg [4:0] write_counter = 0;  // Counts the number of writes
-    reg [REG_WIDTH-1:0] temp_data_out;  // Temporary register to store data_out
+    reg [REG_WIDTH-1:0] temp_data_out =0;  // Temporary register to store data_out
 
     always @(posedge clk or posedge write_data_reset) begin
         if (write_data_reset) begin
@@ -129,7 +147,6 @@ module write_data#(parameter REG_WIDTH = 128)(
 endmodule
 
 
-
 module read_data #( parameter REG_WIDTH = 32)(
   input wire clk,
   input wire read_data_reset,  //active low reset
@@ -139,11 +156,10 @@ module read_data #( parameter REG_WIDTH = 32)(
   output reg enable_output  // will be high when data is getting read from data_in and low when data is read
 );
 
+  reg [REG_WIDTH-1:0] internal_data = 0;
+  reg [4:0] counter = 0 ;
 
-  reg [REG_WIDTH-1:0] internal_data;
-  reg [4:0] counter;
-
-  reg [REG_WIDTH-1:0] prev_data_in;
+  reg [REG_WIDTH-1:0] prev_data_in =0;
 
   always @(posedge clk or posedge read_data_reset) begin
     if (read_data_reset) begin
@@ -155,7 +171,9 @@ module read_data #( parameter REG_WIDTH = 32)(
     end else begin
           if (enable_output) begin
                 if (counter < (REG_WIDTH/8)) begin
-                  data_out_rd <= internal_data[8*counter +: 8];
+                 // data_out_rd <= internal_data[8*counter +: 8];
+                 data_out_rd <= internal_data[((REG_WIDTH-1) - 8*counter) -: 8];
+
                   counter <= counter + 1;
                 end else begin
                   enable_output <= 0;
@@ -177,7 +195,6 @@ module read_data #( parameter REG_WIDTH = 32)(
 endmodule
 
 
-
 module FPU_TOP(
 input[31:0] I1 , 
 input[31:0] I2 , 
@@ -185,7 +202,8 @@ input[31:0] I3 ,
 input[31:0] I4 ,
 input clk, 
 input rst, 
-output  [31:0] out_final
+output  [31:0] out_final,
+output add_valid
 );
 
 
@@ -194,7 +212,7 @@ wire [31:0]I12,I34;
 
 My_FPMult MUL12(.I1(I1),.I2(I2),.clk(clk),.rst (rst),.out(I12));  
 My_FPMult MUL23(.I1(I3),.I2(I4),.clk(clk),.rst (rst),.out(I34));  
-FPA_2IP_old ADD56(.I1(I12),.I2(I34),.clk(clk),.En(rst),.valid(),.out(out_final));       
+FPA_2IP_old ADD56(.I1(I12),.I2(I34),.clk(clk),.En(rst),.valid(add_valid),.out(out_final));       
 
 endmodule
 
@@ -564,7 +582,6 @@ module check_msb_old(
 
 endmodule
    
-
 
 
 
