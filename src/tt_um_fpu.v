@@ -39,14 +39,14 @@ wire [31:0] out_fpu;
 .I3 (I3), 
 .I4 (I4),
 .clk(clk), 
-.rst(~rst_n), 
+.rst(rst_n), 
 .out_final(out_fpu),
 .add_valid(add_valid)
 );
     
   write_data wd(
     .clk             (clk),
-    .write_data_reset(rst_n),//active low reset
+    .write_data_reset(~rst_n),//active low reset
     .data_in_wd       (ui_in), //8 bit input
     .data_out_wd      (inputRegister), //128 bit output
     .data_ready      (data_ready),
@@ -56,7 +56,7 @@ wire [31:0] out_fpu;
 
   read_data rd(
   .clk            (clk),
-  .read_data_reset(rst_n), //active low reset
+  .read_data_reset(~rst_n), //active low reset
   .data_in_rd     (outputRegister), //32 bit input
   .data_out_rd    (uo_out), //8 bit output
   .input_changed  (input_changed),
@@ -67,7 +67,7 @@ assign uio_out = {4'b0000,data_ready,data_read, input_changed,enable_output};
 
   // Group inputs into input register
   always @(posedge clk) begin
-      if (rst_n) begin
+      if (~rst_n) begin
         I1<= 0;
         I2<= 0;
         I3<= 0;
@@ -91,7 +91,7 @@ assign uio_out = {4'b0000,data_ready,data_read, input_changed,enable_output};
 
   // Group outputs into output register
   always @(posedge clk) begin
-    if (rst_n) begin
+    if (~rst_n) begin
       outputRegister <= 0;
     end else begin
         if (add_valid)begin
