@@ -61,7 +61,3 @@ Then the bitstream will be `400ccccd_40533333_408ccccd_40b00000` and start sendi
 
 ![image](https://github.com/fabricchip/tt06_um_fpu/assets/162960669/86110db4-93b8-4a0a-8ff0-38d540448350)
 
-
-## External hardware
-
-To be Done
