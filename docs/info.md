@@ -7,14 +7,37 @@ You can also include images in this folder and reference them in the markdown. E
 512 kb in size, and the combined size of all images must be less than 1 MB.
 -->
 
+
 ## How it works
 
-An FPU (Floating Point Unit) is a specialized part of a computer's hardware designed to handle floating-point arithmetic operations, such as addition, subtraction, multiplication, and division. A multiply-accumulate (MAC) operation is commonly used in digital signal processing (DSP) and other computational tasks.
+The **Dgrid_FPU (Floating Point Unit)** is an integral component of computer hardware engineered to execute floating-point arithmetic operations. It features four 32-bit inputs organized to conduct dual multiplications followed by an addition in series. Specifically, the first pair of 32-bit inputs is multiplied, and simultaneously, the second pair is processed similarly. The results from these multiplications are then fed into a two-input adder, producing a 32-bit final output. This configuration is highly effective in applications that demand robust computing capabilities, such as high-performance computing, digital signal processing, scientific simulations, and graphics processing. The Dgrid_FPU's architecture, which enables the parallel processing of multiple arithmetic operations, significantly boosts performance in these computationally intensive tasks.
 
-An FPU with a 4-input multiply-accumulate adder would likely have the capability to perform a multiply-accumulate operation on four sets of input data simultaneously. This means it can multiply four pairs of numbers together, accumulate the results (i.e., sum them up), and then add the accumulated value to an existing total. This kind of operation is often used in parallel processing to speed up computations, especially in applications where large amounts of data need to be processed quickly.
+                                          32bit I\P  32bit I\P                  32bit I\P  32bit I\P
+                                              |         |                           |         |
+                                        ----------------------                 ---------------------- 
+                                        \                    /                 \                    /
+                                         \       FPU        /                   \       FPU        / 
+                                          \    MULTIPLIER  /                     \    MULTIPLIER  / 
+                                           \              /                       \              /
+                                            --------------                         --------------
+                                                   |___________          ________________|
+                                                          32bit|        | 32bit
+                                                        ----------------------   
+                                                        \                    /    
+                                                         \       FPU        / 
+                                                          \     ADDER      /   
+                                                           \              /  
+                                                            -------------- 
+                                                                   |
+                                                              32bit O\P
+    
+The Dgrid_FPU top module is designed with a configuration that supports 8-bit input and output interfaces, necessitating a systematic process to handle the 128-bit data (comprising four 32-bit inputs) required for operations. The input process involves 16 clock cycles to load the four 32-bit registers sequentially. Once the data is loaded, the computation begins, producing a 32-bit output over the subsequent two clock cycles.
 
-Such an FPU would be particularly useful in applications like high-performance computing, digital signal processing, scientific simulations, and graphics processing, where the ability to perform multiple arithmetic operations in parallel can greatly enhance performance.
+After the computation phase, the 32-bit result is output through the 8-bit interface, which requires an additional four clock cycles to read out the data thoroughly. Additionally, two clock cycles are utilized for data transfer, bringing the total cycle count to 24 for an entire operation sequence from input loading to output retrieval.
 
+A reset operation is required to prepare the module for a new data set, ensuring that the Dgrid_FPU is ready to process subsequent inputs efficiently. It is important to note that both the input and output data conform to the IEEE 754 standard for floating-point numbers, ensuring compatibility and precision in high-stake computational applications.
+
+This Verilog code outlines a Floating Point Unit (FPU) for use in Machine Arithmetic Cores (MACs) within AI accelerators. The FPU facilitates key operations such as adding and multiplying floating-point numbers, which are crucial for executing complex mathematical computations in AI algorithms. It includes modules for managing data input and output, processing up to 128-bit and 32-bit registers, and handling edge cases like infinity and zero. This architecture is especially beneficial for AI applications, allowing parallel processing and enhancing computational efficiency and precision in neural networks. By accelerating operations and ensuring robust data handling, this FPU is instrumental in optimizing AI accelerators, ultimately speeding up learning and inference processes.
 
 ## How to test
 
