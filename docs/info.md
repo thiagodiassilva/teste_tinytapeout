@@ -17,7 +17,10 @@ Such an FPU would be particularly useful in applications like high-performance c
 
 
 ## How to test
-To be Done
+
+
+![image](https://github.com/fabricchip/tt06_um_fpu/assets/162960669/86110db4-93b8-4a0a-8ff0-38d540448350)
+
 
 ## External hardware
 
