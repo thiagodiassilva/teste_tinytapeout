@@ -3,9 +3,9 @@ project:
   title:        "Dgrid_FPU"      # Dgrid FPU
   author:       "Aravind-Prasad-Abhinav-Prakash"      # Aravind-Prasad-Abhinav-Prakash
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "6 Input FPU for MAC at 25MHZ"      # 6 Input FPU for MAC at 28MHZ
+  description:  "6 Input FPU for MAC at 25MHZ"      # 4 Input FPU for MAC at 40MHZ
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     25000000       # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz:     40000000       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "4x2"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
@@ -20,30 +20,30 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "Bit 0 Input"
+  ui[1]: "Bit 1 Input"
+  ui[2]: "Bit 2 Input"
+  ui[3]: "Bit 3 Input"
+  ui[4]: "Bit 4 Input"
+  ui[5]: "Bit 5 Input"
+  ui[6]: "Bit 6 Input"
+  ui[7]: "Bit 7 Input"
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]: "Bit 0 Output"
+  uo[1]: "Bit 1 Output"
+  uo[2]: "Bit 2 Output"
+  uo[3]: "Bit 3 Output"
+  uo[4]: "Bit 4 Output"
+  uo[5]: "Bit 5 Output"
+  uo[6]: "Bit 6 Output"
+  uo[7]: "Bit 7 Output"
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
+  uio[0]: "Ouput used as valid Signal"
+  uio[1]: "Ouput used as valid Signal"
+  uio[2]: "Ouput used as valid Signal"
+  uio[3]: "Ouput used as valid Signal"
   uio[4]: ""
   uio[5]: ""
   uio[6]: ""
