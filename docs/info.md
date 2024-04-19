@@ -41,6 +41,23 @@ This Verilog code outlines a Floating Point Unit (FPU) for use in Machine Arithm
 
 ## How to test
 
+To effectively test the Dgrid_FPU, follow these step-by-step instructions:
+
+- **Reset the Circuit:** Initiate by resetting the circuit to clear any previous data and prepare it for new input.
+- **Write Data:** Write a 128-bit bitstream that includes all four inputs, entering the data 8 bits at a time. This step requires 16 clock cycles to complete.
+- **Wait for Computation:** Allow the module to process the inputs, which will take up to the 20th clock cycle.
+- **Read Output Data:** From the 21st to the 24th clock cycle, read out the 32-bit result in increments of 8 bits to verify the output and ensure the system's functionality.
+ ### Example 
+ - I1 = 2.2 (HEX - 400ccccd)
+ - I2 = 3.3 (HEX - 40533333)
+ - I2 = 4.4 (HEX - 408ccccd)
+ - I2 = 5.5 (HEX - 40b00000)
+
+ - FINAL OUTPUT = 31.46 (HEX - 41fbae13)
+
+Then the bitstream will be `400ccccd_40533333_408ccccd_40b00000` and start sending it from LHS e.g. - Fist data to be send is `40`  and last data is `00` and then observe the output.
+    
+### Waveform
 
 ![image](https://github.com/fabricchip/tt06_um_fpu/assets/162960669/86110db4-93b8-4a0a-8ff0-38d540448350)
 
