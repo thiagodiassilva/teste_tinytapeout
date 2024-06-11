@@ -1,6 +1,6 @@
 # Tiny Tapeout project information
 project:
-  title:        "project"      # Project title
+  title:        "gdl"      # Project title
   author:       "t"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "not"      # One line description of what your project does
@@ -21,7 +21,7 @@ project:
 pinout:
   # Inputs
   ui[0]: "A"
-  ui[1]: "B"
+  ui[1]: ""
   ui[2]: ""
   ui[3]: ""
   ui[4]: ""
